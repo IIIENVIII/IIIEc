@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Accesso Aree</title>
+    <title>Aree e Funzioni Scuola</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -11,9 +11,6 @@
         }
         .container {
             margin-top: 50px;
-        }
-        .links {
-            margin-top: 20px;
         }
         .links a {
             display: block;
@@ -25,19 +22,201 @@
         .links a:hover {
             color: #0056b3;
         }
+        .login-container, .results-container, .attendance-container {
+            display: none;
+            margin-top: 20px;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        input[type="text"], input[type="password"], input[type="date"], input[type="number"] {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"], button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover, button:hover {
+            background-color: #0056b3;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
     </style>
+    <script>
+        function showSection(section) {
+            document.querySelectorAll('.login-container, .results-container, .attendance-container').forEach(function(el) {
+                el.style.display = 'none';
+            });
+            document.getElementById(section).style.display = 'block';
+        }
+        
+        function checkLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            if (username === 'admin' && password === 'password') {
+                alert('Accesso riuscito!');
+                return true;
+            } else {
+                alert('Credenziali non valide!');
+                return false;
+            }
+        }
+
+        function saveResult() {
+            const table = document.getElementById("results-table");
+            const row = table.insertRow();
+            const cell1 = row.insertCell(0);
+            const cell2 = row.insertCell(1);
+            const cell3 = row.insertCell(2);
+            const cell4 = row.insertCell(3);
+
+            cell1.innerHTML = document.getElementById("student-name").value;
+            cell2.innerHTML = document.getElementById("subject").value;
+            cell3.innerHTML = document.getElementById("date").value;
+            cell4.innerHTML = document.getElementById("description").value;
+        }
+    </script>
 </head>
 <body>
+
     <div class="container">
-        <h1>Accesso alle Aree</h1>
+        <h1>Aree Accesso</h1>
         <img src="immagine.jpg" alt="Immagine Area" width="600" height="400">
         
         <div class="links">
-            <a href="area_docenti.html">Area Docenti</a>
-            <a href="area_studenti.html">Area Studenti</a>
-            <a href="area_genitori.html">Area Genitori</a>
-            <a href="resp_corso.html">Responsabile del Corso</a>
+            <a href="#" onclick="showSection('login-docenti')">Area Docenti</a>
+            <a href="#" onclick="showSection('login-studenti')">Area Studenti</a>
+            <a href="#" onclick="showSection('login-genitori')">Area Genitori</a>
+            <a href="#" onclick="showSection('login-resp')">Responsabile del Corso</a>
         </div>
     </div>
+
+    <!-- Login Sezioni -->
+    <div id="login-docenti" class="login-container">
+        <h2>Login Area Docenti</h2>
+        <form onsubmit="return checkLogin()">
+            <label for="username">Nome Utente:</label>
+            <input type="text" id="username" name="username" placeholder="admin" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="password" required>
+            
+            <input type="submit" value="Accedi" onclick="showSection('results-container')">
+        </form>
+    </div>
+
+    <div id="login-studenti" class="login-container">
+        <h2>Login Area Studenti</h2>
+        <form onsubmit="return checkLogin()">
+            <label for="username">Nome Utente:</label>
+            <input type="text" id="username" name="username" placeholder="admin" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="password" required>
+            
+            <input type="submit" value="Accedi" onclick="showSection('results-container')">
+        </form>
+    </div>
+
+    <div id="login-genitori" class="login-container">
+        <h2>Login Area Genitori</h2>
+        <form onsubmit="return checkLogin()">
+            <label for="username">Nome Utente:</label>
+            <input type="text" id="username" name="username" placeholder="admin" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="password" required>
+            
+            <input type="submit" value="Accedi" onclick="showSection('results-container')">
+        </form>
+    </div>
+
+    <div id="login-resp" class="login-container">
+        <h2>Login Responsabile del Corso</h2>
+        <form onsubmit="return checkLogin()">
+            <label for="username">Nome Utente:</label>
+            <input type="text" id="username" name="username" placeholder="admin" required>
+            
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="password" required>
+            
+            <input type="submit" value="Accedi" onclick="showSection('results-container')">
+        </form>
+    </div>
+
+    <!-- Sezione Risultati e Valutazioni -->
+    <div id="results-container" class="results-container">
+        <h2>Inserisci Valutazione</h2>
+        <form>
+            <label for="student-name">Nome Studente:</label>
+            <input type="text" id="student-name" required>
+
+            <label for="subject">Materia:</label>
+            <input type="text" id="subject" required>
+
+            <label for="date">Data:</label>
+            <input type="date" id="date" required>
+
+            <label for="description">Descrizione:</label>
+            <input type="text" id="description" required>
+
+            <button type="button" onclick="saveResult()">Salva Valutazione</button>
+        </form>
+
+        <table id="results-table">
+            <tr>
+                <th>Nome Studente</th>
+                <th>Materia</th>
+                <th>Data</th>
+                <th>Descrizione</th>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Sezione Vita Scolastica -->
+    <div id="attendance-container" class="attendance-container">
+        <h2>Vita Scolastica</h2>
+        <table>
+            <tr>
+                <th>Nome</th>
+                <th>Presente</th>
+                <th>Assente</th>
+                <th>Ritardi</th>
+                <th>Totale Presenze</th>
+                <th>Totale Assenze</th>
+                <th>Totale Ritardi</th>
+            </tr>
+            <tr>
+                <td>Mario Rossi</td>
+                <td><input type="radio" name="mario-presenza"></td>
+                <td><input type="radio" name="mario-assenza"></td>
+                <td><input type="radio" name="mario-ritardi"></td>
+                <td>--</td>
+                <td>--</td>
+                <td>--</td>
+            </tr>
+            <!-- Aggiungere altre righe per altri studenti -->
+        </table>
+    </div>
+
 </body>
 </html>
